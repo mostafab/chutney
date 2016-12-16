@@ -1,0 +1,16 @@
+head
+	link
+	meta
+	title
+		| My Page
+html
+	body
+		div
+			p 
+				| Hello, world!
+				| Yoyoyoyo
+			a
+			span
+		div
+			a
+			div
