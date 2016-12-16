@@ -120,4 +120,4 @@ const main = fileName => {
     // writeToHtmlFile('result.html', html)
 }
 
-main('./test.monk')
+main('./test.chut')
