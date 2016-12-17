@@ -13,11 +13,11 @@ const countCharOccurences = (str, char) => {
     return count
 }
 
-const parseTextLine = line => {
+const mapTextLineToHtmlProps = line => {
 
     const split = line.split(' ').filter(s => s !== '')
     const tag = split[0]
-    const attributes = split.filter((s, i) => i !== 0)
+    const attributes = split.filter((s, i) => i !== 0).join(' ')
     
     const properties = {
         tag,
@@ -40,7 +40,7 @@ const extractProperties = rawAttrs => {
 
 const textToTreeDfs = (textArr, index, depth, visitedLines) => {
     const rawString = textArr[index].trim()
-    const {tag, text, attributes} = parseTextLine(rawString)
+    const {tag, text, attributes} = mapTextLineToHtmlProps(rawString)
 
     const node = new HTMLTreeNode(
         tag,
@@ -69,7 +69,7 @@ const textToTreeDfs = (textArr, index, depth, visitedLines) => {
 }
 
 const htmlDfs = node => {
-    let str = `<${node.tag} ${node.attrs.join(' ')}>${node.text}`
+    let str = `<${node.tag} ${node.attrs}>${node.text}`
     for (let i = 0; i < node.children.length; i++) {
         str += htmlDfs(node.children[i])
     }
