@@ -14,23 +14,17 @@ const countCharOccurences = (str, char) => {
 }
 
 const parseTextLine = line => {
-    const split = line.split(/\(|\)/)
-    const firstSpace = line.indexOf(' ')
-    let tag = split[0]
-    let text = ''
-    if (firstSpace !== -1) {
-        tag = line.substring(0, firstSpace)
-        text = line.substring(firstSpace + 1)
-    }
+
+    const split = line.split(' ').filter(s => s !== '')
+    const tag = split[0]
+    const attributes = split.filter((s, i) => i !== 0)
     
     const properties = {
         tag,
-        text,
-        attributes: {}
+        text: '',
+        attributes
     }
-    if (split.length > 1) {
-        properties.attributes = extractProperties(split[1])
-    }
+
     return properties
 }
 
@@ -58,7 +52,7 @@ const textToTreeDfs = (textArr, index, depth, visitedLines) => {
             const line = textArr[i]
             const numTabs = countCharOccurences(line, '\t')
             const trimmed = line.trim()
-            if (trimmed[0] === '|') {
+            if (trimmed[0] === '|' && numTabs > depth) {
                 node.text += trimmed.substring(1).trim()
                 visitedLines[i] = true
             } else if (numTabs > depth) {
@@ -75,7 +69,7 @@ const textToTreeDfs = (textArr, index, depth, visitedLines) => {
 }
 
 const htmlDfs = node => {
-    let str = `<${node.tag}>${node.text}`
+    let str = `<${node.tag} ${node.attrs.join(' ')}>${node.text}`
     for (let i = 0; i < node.children.length; i++) {
         str += htmlDfs(node.children[i])
     }
@@ -117,7 +111,7 @@ const main = fileName => {
     }
     console.log(JSON.stringify(root, null, 4))
     const html = treeToHtml(root)
-    // writeToHtmlFile('result.html', html)
+    writeToHtmlFile('result.html', html)
 }
 
 main('./test.chut')

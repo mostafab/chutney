@@ -1,16 +1,13 @@
 head
-	link
-	meta
+	link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
 	title
 		| My Page
 html
-	body
-		div
-			p 
+	body class="container" style="background-color:lightblue"
+		div class="col-lg-12"
+			label class="label label-primary"
 				| Hello, world!
 				| Yoyoyoyo
-			a
-			span
-		div
-			a
-			div
+			a class="btn btn-sm btn-warning" href="https://google.com"
+					| Does this work?
+					| I think sooooo....
